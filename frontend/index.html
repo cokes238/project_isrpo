@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieTracker — коллекция фильмов</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar__inner">
+            <h1 class="topbar__title">🎬 MovieTracker</h1>
+            <div class="topbar__stats" id="stats">
+                <span>Всего: <b id="statTotal">0</b></span>
+                <span>Просмотрено: <b id="statWatched">0</b></span>
+                <span>Избранное: <b id="statFav">0</b></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="panel">
+            <h2>Добавить фильм</h2>
+            <form id="movieForm" class="form-grid">
+                <input type="hidden" id="movieId" value="">
+
+                <label>Название*
+                    <input type="text" id="title" maxlength="200" required>
+                </label>
+
+                <label>Режиссёр
+                    <input type="text" id="director" maxlength="500">
+                </label>
+
+                <label>Год выпуска*
+                    <input type="number" id="releaseYear" min="1888" max="2030" value="2024" required>
+                </label>
+
+                <label>Рейтинг (1–10)*
+                    <input type="number" id="rating" min="1" max="10" value="5" required>
+                </label>
+
+                <label>Жанр*
+                    <select id="genreId" required></select>
+                </label>
+
+                <label>URL постера
+                    <input type="url" id="posterUrl" maxlength="500" placeholder="https://...">
+                </label>
+
+                <label class="full">Описание
+                    <textarea id="description" maxlength="500" rows="2"></textarea>
+                </label>
+
+                <div class="form-actions full">
+                    <button type="submit" id="submitBtn" class="btn btn--primary">Добавить</button>
+                    <button type="button" id="resetBtn" class="btn">Сброс</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Жанры</h2>
+            <form id="genreForm" class="form-grid form-grid--small">
+                <label>Название*
+                    <input type="text" id="genreName" maxlength="50" required>
+                </label>
+                <label>Цвет
+                    <input type="color" id="genreColor" value="#667eea">
+                </label>
+                <label class="full">Описание
+                    <input type="text" id="genreDescription" maxlength="200">
+                </label>
+                <div class="form-actions full">
+                    <button type="submit" class="btn btn--primary">Добавить жанр</button>
+                </div>
+            </form>
+            <ul id="genreList" class="chip-list"></ul>
+        </section>
+
+        <section class="panel">
+            <h2>Фильтры и сортировка</h2>
+            <div class="filters">
+                <label>Поиск
+                    <input type="text" id="filterSearch" placeholder="Название или режиссёр">
+                </label>
+                <label>Жанр
+                    <select id="filterGenre"><option value="">Все</option></select>
+                </label>
+                <label>Статус
+                    <select id="filterWatched">
+                        <option value="">Все</option>
+                        <option value="true">Просмотренные</option>
+                        <option value="false">Не просмотренные</option>
+                    </select>
+                </label>
+                <label>Избранное
+                    <select id="filterFav">
+                        <option value="">Все</option>
+                        <option value="true">Только избранные</option>
+                    </select>
+                </label>
+                <label>Мин. рейтинг
+                    <input type="number" id="filterRating" min="1" max="10">
+                </label>
+                <label>Сортировка
+                    <select id="sortBy">
+                        <option value="createdAt">По дате добавления</option>
+                        <option value="title">По названию</option>
+                        <option value="rating">По рейтингу</option>
+                        <option value="year">По году</option>
+                    </select>
+                </label>
+                <label>Порядок
+                    <select id="sortDir">
+                        <option value="true">По убыванию</option>
+                        <option value="false">По возрастанию</option>
+                    </select>
+                </label>
+                <div class="filter-actions">
+                    <button id="applyFilters" class="btn btn--primary">Применить</button>
+                    <button id="clearFilters" class="btn">Сбросить</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Фильмы</h2>
+            <div id="movieList" class="movies"></div>
+            <p id="emptyMsg" class="empty hidden">Нет фильмов по выбранным фильтрам.</p>
+        </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
